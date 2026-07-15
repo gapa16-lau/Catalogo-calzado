@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Footwear Studio - Catalog & Retouch Manager</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts & FontAwesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .serif-title {
+            font-family: 'Playfair Display', serif;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #334155;
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen selection:bg-teal-500 selection:text-slate-900">
+
+    <!-- TOP NAVIGATION -->
+    <header class="border-b border-slate-800 bg-slate-950/80 backdrop-blur sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="h-10 w-10 rounded-xl bg-gradient-to-tr from-teal-500 to-emerald-400 flex items-center justify-center shadow-lg shadow-teal-500/20">
+                    <i class="fa-solid fa-shoe-prints text-slate-950 text-lg"></i>
+                </div>
+                <div>
+                    <span class="text-xs font-semibold tracking-widest text-teal-400 uppercase">Estudio Profesional</span>
+                    <h1 class="text-lg font-bold text-slate-100 tracking-tight">Kicks & Co. Catálogo</h1>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-4">
+                <div class="hidden md:flex bg-slate-900 rounded-full px-4 py-1.5 border border-slate-800 text-xs text-slate-400 items-center gap-2">
+                    <span class="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    4 Lotes Curados (40/100 Fotos)
+                </div>
+                <button onclick="openUploadGuideline()" class="bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold px-4 py-2 rounded-xl text-sm transition-all shadow-md hover:shadow-lg hover:shadow-teal-500/10 flex items-center gap-2">
+                    <i class="fa-solid fa-plus"></i>
+                    <span>Siguiente Lote (+10)</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTAINER -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+
+        <!-- DASHBOARD HERO SECTION -->
+        <div class="relative bg-slate-950 rounded-3xl p-8 border border-slate-800 overflow-hidden mb-12 shadow-2xl">
+            <div class="absolute -right-16 -top-16 w-80 h-80 bg-teal-500/10 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute -left-16 -bottom-16 w-80 h-80 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none"></div>
+            
+            <div class="relative z-10 grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+                <div class="lg:col-span-2">
+                    <span class="bg-teal-500/10 text-teal-400 border border-teal-500/20 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider">Mesa de Control de Curaduría</span>
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-slate-100 mt-4 leading-tight">Workspace de Integración y Diseño</h2>
+                    <p class="text-slate-400 mt-2 text-base max-w-xl">
+                        Hemos analizado los primeros 4 lotes (40 imágenes). Como fotógrafos, diseñadores y mercadólogos, preparamos las especificaciones técnicas para limpiar el fondo marrón de felpa original y dejar el calzado listo para catálogo digital e impreso.
+                    </p>
+                </div>
+                <!-- STATS PANEL -->
+                <div class="grid grid-cols-3 gap-4 bg-slate-900/50 p-6 rounded-2xl border border-slate-800">
+                    <div class="text-center">
+                        <span class="block text-2xl md:text-3xl font-extrabold text-teal-400">40</span>
+                        <span class="text-[10px] text-slate-500 uppercase font-bold">Imágenes Analizadas</span>
+                    </div>
+                    <div class="text-center border-x border-slate-800">
+                        <span class="block text-2xl md:text-3xl font-extrabold text-slate-100">14</span>
+                        <span class="text-[10px] text-slate-500 uppercase font-bold">Modelos Curados</span>
+                    </div>
+                    <div class="text-center">
+                        <span class="block text-2xl md:text-3xl font-extrabold text-emerald-400">40%</span>
+                        <span class="text-[10px] text-slate-500 uppercase font-bold">Avance Total</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- INTERACTIVE RETOUCH SIMULATOR -->
+        <section class="mb-16 bg-slate-950 rounded-3xl border border-slate-800 p-8 shadow-2xl relative overflow-hidden" id="simulator-section">
+            <div class="absolute -right-32 -bottom-32 w-96 h-96 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="mb-6">
+                <div class="flex items-center gap-2 text-teal-400 text-xs font-bold uppercase tracking-wider">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    <span>Simulador Gráfico del Estudio</span>
+                </div>
+                <h3 class="text-xl font-bold text-slate-100 mt-1 flex items-center gap-2">
+                    Propuesta de Remoción de Fondo y Restauración Digital
+                </h3>
+                <p class="text-slate-400 text-sm mt-1">Selecciona cualquier modelo del catálogo abajo para simular el proceso de retoque profesional. Observa cómo se transforma el fondo de felpa marrón original a un estándar editorial de alta gama.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <!-- Interactive Preview Area -->
+                <div class="lg:col-span-7 flex justify-center">
+                    <div class="relative w-full max-w-md aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl border border-slate-800 bg-slate-900 flex items-center justify-center">
+                        
+                        <!-- Simulated Original Layer -->
+                        <div id="originalBg" class="absolute inset-0 bg-[#4e3629] transition-all duration-500 flex flex-col items-center justify-center p-6 text-center">
+                            <!-- Simulated fuzzy blanket texture with CSS -->
+                            <div class="absolute inset-0 opacity-30 mix-blend-overlay" style="background-image: radial-gradient(#22120b 1px, transparent 1px); background-size: 8px 8px;"></div>
+                            <div class="w-56 h-36 bg-slate-950/20 rounded-xl border border-dashed border-slate-100/10 flex flex-col items-center justify-center shadow-lg transform -rotate-12 transition-transform duration-500 relative p-4 text-center">
+                                <i class="fa-solid fa-image text-slate-400/60 text-4xl mb-2"></i>
+                                <span class="text-slate-200 font-bold text-sm tracking-wide uppercase" id="sim-title-orig">Nike AF1 Holographic</span>
+                                <span class="text-[10px] text-orange-400 font-mono mt-1" id="sim-file-orig">WhatsApp...2.12.30 AM.jpeg</span>
+                                <span class="absolute bottom-1 text-[8px] text-slate-400 font-semibold uppercase tracking-wider">Fondo Original Peluche Marrón</span>
+                            </div>
+                        </div>
+
+                        <!-- Simulated Professional Retouched Layer -->
+                        <div id="retouchedBg" class="absolute inset-0 bg-gradient-to-b from-white to-slate-200 transition-all duration-500 opacity-0 flex flex-col items-center justify-center p-6">
+                            <!-- Soft drop shadow under the simulated shoe -->
+                            <div class="w-56 h-6 bg-slate-950/20 rounded-full blur-md absolute bottom-20 transition-all duration-500 transform scale-0" id="shadowSim"></div>
+                            
+                            <div class="w-56 h-36 bg-slate-900 rounded-xl flex flex-col items-center justify-center shadow-2xl transform transition-all duration-500 z-10 border border-slate-700 p-4" id="shoeSim">
+                                <i class="fa-solid fa-shoe-prints text-teal-400 text-4xl mb-2"></i>
+                                <span class="text-slate-100 font-extrabold text-sm tracking-wide uppercase" id="sim-title-ret">Nike AF1 Holographic</span>
+                                <span class="text-[10px] text-emerald-400 font-mono mt-1">Listo para Web / Catálogo</span>
+                            </div>
+                            <span class="absolute bottom-4 left-4 text-[10px] text-slate-500 font-semibold tracking-wider uppercase"><i class="fa-solid fa-scissors text-teal-500 mr-1"></i>Trazado de Pluma Puro + Sombra Digital</span>
+                        </div>
+
+                        <!-- Before / After Badge -->
+                        <div class="absolute top-4 right-4 bg-slate-950/90 backdrop-blur px-3 py-1.5 rounded-full border border-slate-800 text-xs font-semibold text-slate-200" id="statusBadge">
+                            Vista Original (Felpa)
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Simulation Controls & Rationale -->
+                <div class="lg:col-span-5 space-y-6">
+                    <div class="bg-slate-900/80 p-6 rounded-2xl border border-slate-800 space-y-4">
+                        <h4 class="text-sm font-bold text-slate-200 uppercase tracking-wider flex items-center gap-2">
+                            <i class="fa-solid fa-sliders text-teal-400"></i>
+                            <span>Controles del Diseñador</span>
+                        </h4>
+                        
+                        <div class="flex items-center justify-between p-3 bg-slate-950 rounded-xl border border-slate-800">
+                            <span class="text-xs text-slate-300 font-bold uppercase">Aplicar Clipping Path e Iluminación</span>
+                            <button onclick="toggleRetouch()" id="retouchBtn" class="w-14 h-8 bg-slate-800 rounded-full p-1 transition-all duration-300 relative">
+                                <div class="w-6 h-6 bg-slate-400 rounded-full transition-transform duration-300 transform translate-x-0" id="toggleDot"></div>
+                            </button>
+                        </div>
+
+                        <div class="space-y-3 text-xs text-slate-400 leading-relaxed" id="sim-instructions">
+                            <p class="flex gap-2 items-start"><span class="text-teal-400 font-bold"><i class="fa-solid fa-check"></i></span> <span><strong>Trazado de Vector (Pluma):</strong> Silueteado ultra preciso para remover el fondo de felpa sin bordes dentados.</span></p>
+                            <p class="flex gap-2 items-start"><span class="text-teal-400 font-bold"><i class="fa-solid fa-check"></i></span> <span><strong>Sombra de Contacto:</strong> Creación de sombra digital suave y difuminada para asentar el calzado en el plano blanco.</span></p>
+                            <p class="flex gap-2 items-start"><span class="text-teal-400 font-bold"><i class="fa-solid fa-check"></i></span> <span><strong>Corrección de Iluminación:</strong> Eliminación de brillos excesivos y sombras duras del flash original.</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CATALOG SECTIONS WITH LIVE FILTERING -->
+        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 mb-8 bg-slate-950 p-6 rounded-2xl border border-slate-800">
+            <div>
+                <h3 class="text-xl font-bold text-slate-100 flex items-center gap-2">
+                    <i class="fa-solid fa-layer-group text-teal-400"></i>
+                    <span>Catálogo Curado - 14 Modelos</span>
+                </h3>
+                <p class="text-slate-400 text-xs mt-1">Estructurado estratégicamente en base a categorías de Marketing: Tenis, Calzado de Dama y Calzado de Caballero.</p>
+            </div>
+            
+            <div class="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+                <!-- Search Input -->
+                <div class="relative w-full sm:w-64">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
+                    <input type="text" id="searchInput" oninput="filterProducts()" placeholder="Buscar modelo o archivo..." class="w-full bg-slate-900 border border-slate-800 rounded-xl pl-9 pr-4 py-2 text-xs focus:outline-none focus:border-teal-500 text-slate-100 transition-all">
+                </div>
+                <!-- Category Tabs -->
+                <div class="flex bg-slate-900 p-1 rounded-xl border border-slate-800 overflow-x-auto shrink-0">
+                    <button onclick="switchCategory('all')" id="tab-all" class="category-tab px-4 py-2 text-xs font-bold rounded-lg transition-all text-slate-950 bg-teal-400">Todos (14)</button>
+                    <button onclick="switchCategory('dama')" id="tab-dama" class="category-tab px-4 py-2 text-xs font-bold rounded-lg transition-all text-slate-400 hover:text-slate-100">Dama (8)</button>
+                    <button onclick="switchCategory('caballero')" id="tab-caballero" class="category-tab px-4 py-2 text-xs font-bold rounded-lg transition-all text-slate-400 hover:text-slate-100">Caballero (2)</button>
+                    <button onclick="switchCategory('tenis')" id="tab-tenis" class="category-tab px-4 py-2 text-xs font-bold rounded-lg transition-all text-slate-400 hover:text-slate-100">Tenis (4)</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- PRODUCT GRID -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="productGrid">
+            <!-- CARDS GENERATED DYNAMICALLY / DRAFTED FOR SEAMLESS STATIC RENDER -->
+        </div>
+
+        <!-- PROGRESS MATRIX TIMELINE -->
+        <section class="mt-16 bg-slate-950 rounded-3xl border border-slate-800 p-8 shadow-2xl">
+            <h3 class="text-xl font-bold text-slate-100 mb-6 flex items-center gap-2">
+                <i class="fa-solid fa-diagram-project text-teal-400"></i>
+                <span>Matriz de Integración y Progreso Fotográfico (Total 100)</span>
+            </h3>
+            
+            <div class="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-10 gap-3">
+                <div class="bg-teal-500/10 border border-teal-500/30 p-3 rounded-xl text-center">
+                    <span class="block text-xs font-bold text-teal-400">Lote 1</span>
+                    <span class="text-[9px] text-slate-400 font-mono">10 / 10 Fotos</span>
+                    <div class="h-1 bg-teal-500 rounded-full mt-2"></div>
+                </div>
+                <div class="bg-teal-500/10 border border-teal-500/30 p-3 rounded-xl text-center">
+                    <span class="block text-xs font-bold text-teal-400">Lote 2</span>
+                    <span class="text-[9px] text-slate-400 font-mono">10 / 10 Fotos</span>
+                    <div class="h-1 bg-teal-500 rounded-full mt-2"></div>
+                </div>
+                <div class="bg-teal-500/10 border border-teal-500/30 p-3 rounded-xl text-center">
+                    <span class="block text-xs font-bold text-teal-400">Lote 3</span>
+                    <span class="text-[9px] text-slate-400 font-mono">10 / 10 Fotos</span>
+                    <div class="h-1 bg-teal-500 rounded-full mt-2"></div>
+                </div>
+                <div class="bg-teal-500/10 border border-teal-500/30 p-3 rounded-xl text-center">
+                    <span class="block text-xs font-bold text-teal-400">Lote 4</span>
+                    <span class="text-[9px] text-slate-400 font-mono">10 / 10 Fotos</span>
+                    <div class="h-1 bg-teal-500 rounded-full mt-2"></div>
+                </div>
+                <div class="bg-slate-900 border border-dashed border-slate-700 p-3 rounded-xl text-center opacity-60">
+                    <span class="block text-xs font-bold text-slate-300">Lote 5</span>
+                    <span class="text-[9px] text-slate-500 font-mono">Pendiente</span>
+                    <div class="h-1 bg-slate-700 rounded-full mt-2"></div>
+                </div>
+                <div class="bg-slate-900 border border-dashed border-slate-700 p-3 rounded-xl text-center opacity-60">
+                    <span class="block text-xs font-bold text-slate-300">Lote 6</span>
+                    <span class="text-[9px] text-slate-500 font-mono">Pendiente</span>
+                    <div class="h-1 bg-slate-700 rounded-full mt-2"></div>
+                </div>
+                <div class="bg-slate-900 border border-dashed border-slate-700 p-3 rounded-xl text-center opacity-60">
+                    <span class="block text-xs font-bold text-slate-300">Lote 7</span>
+                    <span class="text-[9px] text-slate-500 font-mono">Pendiente</span>
+                    <div class="h-1 bg-slate-700 rounded-full mt-2"></div>
+                </div>
+                <div class="bg-slate-900 border border-dashed border-slate-700 p-3 rounded-xl text-center opacity-60">
+                    <span class="block text-xs font-bold text-slate-300">Lote 8</span>
+                    <span class="text-[9px] text-slate-500 font-mono">Pendiente</span>
+                    <div class="h-1 bg-slate-700 rounded-full mt-2"></div>
+                </div>
+                <div class="bg-slate-900 border border-dashed border-slate-700 p-3 rounded-xl text-center opacity-60">
+                    <span class="block text-xs font-bold text-slate-300">Lote 9</span>
+                    <span class="text-[9px] text-slate-500 font-mono">Pendiente</span>
+                    <div class="h-1 bg-slate-700 rounded-full mt-2"></div>
+                </div>
+                <div class="bg-slate-900 border border-dashed border-slate-700 p-3 rounded-xl text-center opacity-60">
+                    <span class="block text-xs font-bold text-slate-300">Lote 10</span>
+                    <span class="text-[9px] text-slate-500 font-mono">Pendiente</span>
+                    <div class="h-1 bg-slate-700 rounded-full mt-2"></div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- PRODUCT DETAIL SIDE DRAWERS / MODALS -->
+    <div id="detailModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-slate-900 rounded-3xl border border-slate-800 max-w-2xl w-full max-h-[85vh] overflow-y-auto shadow-2xl relative">
+            
+            <button onclick="closeDetailModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-100 bg-slate-950/40 p-2.5 rounded-full border border-slate-800 transition-all z-10">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            
+            <div class="p-8">
+                <!-- Header -->
+                <div class="flex items-center gap-3 mb-4">
+                    <span id="modalCategory" class="bg-teal-500/10 text-teal-400 border border-teal-500/20 px-3 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-wider">Categoría</span>
+                    <span id="modalCode" class="text-xs font-mono text-slate-500">COD-00</span>
+                </div>
+                
+                <h4 id="modalName" class="text-2xl font-extrabold text-slate-100 tracking-tight serif-title">Nombre del Modelo</h4>
+                
+                <!-- Photos Inventory Section -->
+                <div class="mt-6 bg-slate-950 rounded-2xl p-5 border border-slate-800">
+                    <h5 class="text-xs font-bold text-teal-400 uppercase tracking-wider mb-3"><i class="fa-solid fa-images mr-2"></i>Curaduría de Archivos</h5>
+                    <div class="space-y-2.5 text-xs">
+                        <div class="flex items-start gap-2 bg-slate-900 p-2.5 rounded-xl border border-slate-800">
+                            <span class="bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded font-mono font-bold shrink-0">HERO (Seleccionada)</span>
+                            <span id="modalHeroFile" class="font-mono text-slate-200 select-all font-semibold break-all">WhatsApp Image...</span>
+                        </div>
+                        <div class="flex items-start gap-2 bg-slate-900 p-2.5 rounded-xl border border-slate-800">
+                            <span class="bg-slate-800 text-slate-400 px-2 py-0.5 rounded font-mono font-bold shrink-0">Otras Tomas</span>
+                            <span id="modalAltFiles" class="font-mono text-slate-300 break-all">No aplica</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Roles Perspectives Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                    <!-- Fotógrafo -->
+                    <div class="bg-slate-950/60 p-5 rounded-2xl border border-slate-800 space-y-2">
+                        <div class="flex items-center gap-2 text-sky-400 text-xs font-bold uppercase tracking-wider">
+                            <i class="fa-solid fa-camera"></i>
+                            <span>Fotógrafo Profesional</span>
+                        </div>
+                        <p id="modalPhotoFeedback" class="text-xs text-slate-300 leading-relaxed">Instrucciones fotográficas y ángulo de disparo seleccionado.</p>
+                    </div>
+
+                    <!-- Diseñador Gráfico -->
+                    <div class="bg-slate-950/60 p-5 rounded-2xl border border-slate-800 space-y-2">
+                        <div class="flex items-center gap-2 text-purple-400 text-xs font-bold uppercase tracking-wider">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i>
+                            <span>Diseñador Gráfico (Pautas de Retoque)</span>
+                        </div>
+                        <p id="modalDesignFeedback" class="text-xs text-slate-300 leading-relaxed">Retoques del calzado, suela, remoción de polvo o desprendimiento de hilos.</p>
+                    </div>
+                </div>
+
+                <!-- Marketing Box -->
+                <div class="mt-6 bg-gradient-to-br from-slate-950 to-slate-900 p-6 rounded-2xl border border-slate-800 space-y-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2 text-emerald-400 text-xs font-bold uppercase tracking-wider">
+                            <i class="fa-solid fa-bullhorn"></i>
+                            <span>Marketing & Copywriting</span>
+                        </div>
+                        <button onclick="copyMarketingText()" class="text-slate-400 hover:text-teal-400 text-xs transition-all flex items-center gap-1 bg-slate-900 px-2.5 py-1 rounded-lg border border-slate-800">
+                            <i class="fa-solid fa-copy"></i>
+                            <span>Copiar Texto</span>
+                        </button>
+                    </div>
+                    
+                    <div class="space-y-3">
+                        <div class="bg-slate-900/60 p-3.5 rounded-xl border border-slate-800/80">
+                            <p id="modalMarketingCopy" class="text-sm text-slate-200 italic leading-relaxed">"Descripción comercial"</p>
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-4 text-xs">
+                            <div class="bg-slate-900/40 p-3 rounded-xl border border-slate-800/60">
+                                <span class="text-slate-500 font-bold block uppercase tracking-wider text-[9px]">Sugerencia de Redes</span>
+                                <span id="modalMarketingHook" class="text-slate-300 mt-1 block">Un calzado único...</span>
+                            </div>
+                            <div class="bg-slate-900/40 p-3 rounded-xl border border-slate-800/60">
+                                <span class="text-slate-500 font-bold block uppercase tracking-wider text-[9px]">Enfoque de Ventas</span>
+                                <span id="modalMarketingStrategy" class="text-slate-300 mt-1 block">Comodidad diaria y formalidad en tendencia escolar.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer Acciones -->
+                <div class="mt-8 pt-6 border-t border-slate-800 flex justify-end gap-3">
+                    <button onclick="closeDetailModal()" class="px-5 py-2.5 bg-slate-850 hover:bg-slate-800 text-xs text-slate-300 font-bold rounded-xl transition-all">
+                        Cerrar Detalles
+                    </button>
+                    <button onclick="selectForSimulatorFromModal()" class="px-5 py-2.5 bg-teal-400 hover:bg-teal-300 text-slate-950 text-xs font-bold rounded-xl transition-all flex items-center gap-1.5">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        <span>Cargar en Simulador</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- UPLOAD GUIDELINE MODAL -->
+    <div id="uploadModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-slate-900 rounded-3xl border border-slate-800 p-8 max-w-lg w-full space-y-6 relative">
+            <button onclick="closeUploadModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-100">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            
+            <div class="space-y-2">
+                <h4 class="text-xl font-bold text-slate-100">Instrucciones para el Siguiente Lote (Lote 5)</h4>
+                <p class="text-slate-400 text-sm">Para continuar con la construcción del catálogo bajo altos estándares comerciales:</p>
+            </div>
+
+            <div class="space-y-4 text-sm text-slate-300">
+                <div class="flex gap-3 items-start">
+                    <span class="bg-teal-500/10 text-teal-400 px-2 py-0.5 rounded text-xs font-bold font-mono">Paso 1</span>
+                    <p>Adjunta el siguiente grupo de **10 fotos** en el chat (sería el lote del 41 al 50).</p>
+                </div>
+                <div class="flex gap-3 items-start">
+                    <span class="bg-teal-500/10 text-teal-400 px-2 py-0.5 rounded text-xs font-bold font-mono">Paso 2</span>
+                    <p>De preferencia, incluye tomas que pertenezcan a nuevos modelos de calzado (ya sea sandalias, botas, mocasines o tenis).</p>
+                </div>
+                <div class="flex gap-3 items-start">
+                    <span class="bg-teal-500/10 text-teal-400 px-2 py-0.5 rounded text-xs font-bold font-mono">Paso 3</span>
+                    <p>Analizaré inmediatamente la calidad fotográfica de tu lote y lo integraremos al sistema.</p>
+                </div>
+            </div>
+
+            <button onclick="closeUploadModal()" class="w-full bg-teal-400 text-slate-950 font-bold py-3 rounded-xl hover:bg-teal-300 transition-all">
+                ¡Entendido, prepararé el lote!
+            </button>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="border-t border-slate-800 bg-slate-950 mt-20 py-8">
+        <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-500">
+            &copy; 2026 Footwear Studio. Herramienta de Maquetación de Catálogos para Marcas Premium.
+        </div>
+    </footer>
+
+    <!-- LOGIC FOR INTERACTIVITY -->
+    <script>
+        // FULL 14 MODEL DATA SET PRE-COMPILED FROM THE 40 REAL UPLOADED PHOTOS
+        const productsData = [
+            {
+                id: "af1-holo",
+                category: "tenis",
+                code: "MOD-01",
+                name: "Nike Air Force Holographic",
+                heroImage: "WhatsApp Image 2026-07-14 at 2.12.30 AM.jpeg",
+                altImages: "WhatsApp Image 2026-07-14 at 2.12.29 AM.jpeg, WhatsApp Image 2026-07-14 at 2.12.28 AM.jpeg",
+                photoFeedback: "Ángulo de perfil lateral impecable que destaca de manera sobresaliente la silueta de la suela blanca y los destellos iridiscentes y tornasolados del Swoosh lateral.",
+                designFeedback: "Remover de manera estricta el fondo de felpa café. Aplicar máscara de recorte limpia de trazados vectoriales. Retocar levemente hilos sobresalientes en la lengüeta superior.",
+                marketingCopy: "Camina con destello propio. La silueta clásica del básquetbol urbano se actualiza con un Swoosh holográfico iridiscente que cambia de tono con cada paso.",
+                marketingHook: "La leyenda urbana se vuelve iridiscente.",
+                marketingStrategy: "Campañas enfocadas en Generación Z y tendencias de Streetwear moderno."
+            },
+            {
+                id: "samba-classic",
+                category: "tenis",
+                code: "MOD-02",
+                name: "Samba White Classic",
+                heroImage: "WhatsApp Image 2026-07-14 at 2.12.27 AM (1).jpeg",
+                altImages: "WhatsApp Image 2026-07-14 at 2.12.26 AM.jpeg",
+                photoFeedback: "Fotografía de tres cuartos lateral que expone perfectamente la marca de aluminio dorada 'SAMBA' y el icónico contraste de la punta de gamuza clara con la piel sintética blanca.",
+                designFeedback: "Limpiar suciedades menores acumuladas en la punta de gamuza. Ajustar niveles y contraste en las tres franjas negras laterales para un negro mate profundo y elegante.",
+                marketingCopy: "El clásico eterno de las canchas adaptado a tu estilo diario. Diseñado con tres franjas de contraste y una refinada puntera de gamuza que eleva cualquier outfit informal.",
+                marketingHook: "Estilo retro inigualable, comodidad hoy.",
+                marketingStrategy: "Promocionar como 'Básico indispensable de armario' para looks casuales y semi-formales."
+            },
+            {
+                id: "campus-lavender",
+                category: "tenis",
+                code: "MOD-03",
+                name: "Campus Lavender Suede",
+                heroImage: "WhatsApp Image 2026-07-14 at 2.12.26 AM (1).jpeg",
+                altImages: "WhatsApp Image 2026-07-14 at 2.12.27 AM.jpeg",
+                photoFeedback: "Toma de perfil nítida que capta de manera ideal la suavidad de la gamuza lila/lavanda y la robustez característica de las agujetas extra anchas blancas.",
+                designFeedback: "Corregir dominancia cromática cálida (tono amarillento transmitido por la luz del entorno de felpa café) sobre el cuerpo lavanda de gamuza y la suela blanca.",
+                marketingCopy: "Suavidad en color, volumen en actitud. Reinventa tu calzado urbano con un toque lavanda pastel único y los cordones anchos que marcan la pauta del estilo retro.",
+                marketingHook: "Camina con el volumen y el lila en tendencia.",
+                marketingStrategy: "Enfoque de venta en tendencias coquette y calzado urbano de colección."
+            },
+            {
+                id: "samba-navy",
+                category: "tenis",
+                code: "MOD-04",
+                name: "Samba Navy Blue & Gold",
+                heroImage: "WhatsApp Image 2026-07-14 at 2.12.55 AM.jpeg",
+                altImages: "WhatsApp Image 2026-07-14 at 2.12.30 AM (1).jpeg, WhatsApp Image 2026-07-14 at 2.12.29 AM (1).jpeg",
+                photoFeedback: "El encuadre lateral plano retrata de forma espectacular la elegante combinación de piel sintética y gamuza color azul marino con las franjas blancas y suela de goma oscura.",
+                designFeedback: "Suavizar pliegues ligeros del empaque en la puntera y realzar el brillo de las letras doradas de 'SAMBA' mediante una capa de ajuste de curvas selectiva.",
+                marketingCopy: "Un clásico que se viste de gala. La combinación perfecta de azul marino profundo, gamuza de tacto suave y detalles de contraste blanco que dominan la escena del calzado retro.",
+                marketingHook: "Azul profundo que impone presencia urbana.",
+                marketingStrategy: "Ideal para audiencias masculinas y unisex que buscan diseño casual atemporal."
+            },
+            {
+                id: "mj-leslie",
+                category: "dama",
+                code: "MOD-05",
+                name: "Mary Jane Leslie Rubí",
+                heroImage: "WhatsApp Image 2026-07-14 at 2.12.48 AM.jpeg",
+                altImages: "WhatsApp Image 2026-07-14 at 2.12.48 AM (1).jpeg, WhatsApp Image 2026-07-14 at 2.12.48 AM (2).jpeg, WhatsApp Image 2026-07-14 at 2.12.48 AM (3).jpeg, WhatsApp Image 2026-07-14 at 2.12.48 AM (4).jpeg, WhatsApp Image 2026-07-14 at 2.12.48 AM (5).jpeg, WhatsApp Image 2026-07-14 at 2.12.48 AM (6).jpeg",
+                photoFeedback: "Toma cenital paralela simétrica excelente que permite apreciar la amplitud de la horma y la calidad de la plantilla acolchada Leslie Rubí.",
+                designFeedback: "ALERTA CRÍTICA: Reparar digitalmente el desprendimiento de costuras traseras interiores e hilos sueltos visibles en el macro de Lote 2. Limpiar marcas de la plantilla interior.",
+                marketingCopy: "Elegancia clásica y soporte total para tus días escolares y formales. Diseñado con correa ajustable de hebilla metálica de alta duración y plantilla interna de máximo confort.",
+                marketingHook: "Pasos seguros con la dulzura coquette clásica.",
+                marketingStrategy: "Temporada escolar 'Back to School' y calzado formal diario infantil."
+            },
+            {
+                id: "mj-dulce",
+                category: "dama",
+                code: "MOD-06",
+                name: "Mary Jane Dulce M.",
+                heroImage: "WhatsApp Image 2026-07-14 at 2.12.38 AM.jpeg",
+                altImages: "WhatsApp Image 2026-07-14 at 2.12.39 AM.jpeg, WhatsApp Image 2026-07-14 at 2.12.39 AM (1).jpeg",
+                photoFeedback: "Composición diagonal en pareja que destaca el sutil adorno de flor en la parte frontal y la hebilla de ajuste en la correa del empeine.",
+                designFeedback: "ALERTA DE RETOQUE: Se observa excedente de adhesivo industrial grisáceo/blanco en la unión de la punta del zapato y la suela. Remover digitalmente mediante clonado preciso.",
+                marketingCopy: "El detalle floral que marca la diferencia. Dulce M. ofrece un zapato escolar y de vestir sumamente cómodo que destaca con una delicada aplicación de flor en relieve.",
+                marketingHook: "La combinación de elegancia y estilo que encanta.",
+                marketingStrategy: "Enfoque en mamás y familias buscando durabilidad de materiales y diseño escolar único."
+            },
+            {
+                id: "chunky-beige",
+                category: "dama",
+                code: "MOD-07",
+                name: "Botín Casual Chunky Beige",
+                heroImage: "WhatsApp Image 2026-07-14 at 2.12.52 AM (4).jpeg",
+                altImages: "WhatsApp Image 2026-07-14 at 2.12.52 AM (5).jpeg, WhatsApp Image 2026-07-14 at 2.12.52 AM (3).jpeg",
+                photoFeedback: "Toma lateral nítida y perfectamente alineada que resalta la altura imponente de la suela dentada y el acabado de piel mate sintética de la marca EREZ.",
+                designFeedback: "Neutralizar áreas sombreadas oscuras que lucen grisáceas o manchadas en el cuerpo beige del calzado debido a las condiciones de iluminación de rebote.",
+                marketingCopy: "Eleva tu estilo, conquista la ciudad. Botín chunky en tono nude mate con cordones resistentes y ojales de montañismo, la mezcla perfecta de robustez y sofisticación.",
+                marketingHook: "La tendencia chunky que redefine tu guardarropa de invierno.",
+                marketingStrategy: "Dirigido a moda juvenil, outfits otoñales y looks urbanos atrevidos."
+            },
+            {
+                id: "chunky-olive",
+                category: "dama",
+                code: "MOD-08",
+                name: "Botín Casual Chunky Olive",
+                heroImage: "WhatsApp Image 2026-07-14 at 2.12.52 AM (2).jpeg",
+                altImages: "WhatsApp Image 2026-07-14 at 2.12.52 AM (1).jpeg",
+                photoFeedback: "Fotografía de perfil limpio que expone el hermoso contraste entre la piel mate color verde oliva y la suela tractorada color beige claro.",
+                designFeedback: "Eliminar el reflejo rojizo/marrón en la parte baja de la suela debido al rebote cromático del tapete de felpa original. Aplicar curvas para aclarar la entresuela.",
+                marketingCopy: "Actitud militar con el confort más avanzado. Un botín audaz color verde oliva con suela dentada beige, perfecto para combinar con jeans rotos y abrigos XL.",
+                marketingHook: "Verde militar, actitud sin límites.",
+                marketingStrategy: "Posicionamiento en redes como calzado icónico de temporada de frío / invierno."
+            },
+            {
+                id: "chunky-black",
+                category: "dama",
+                code: "MOD-09",
+                name: "Botín Casual Chunky Black",
+                heroImage: "WhatsApp Image 2026-07-14 at 2.12.51 AM (7).jpeg",
+                altImages: "WhatsApp Image 2026-07-14 at 2.12.51 AM (4).jpeg",
+                photoFeedback: "Encuadre lateral de estudio que capta la sobriedad del modelo EREZ negro mate absoluto con herrajes metálicos plateados en las agujetas.",
+                designFeedback: "Ajustar contraste local para resaltar las costuras dobles laterales sin quemar las zonas oscuras de la suela sintética negra.",
+                marketingCopy: "El clásico que combina con todo. Botín chunky en tono negro mate profundo, herrajes de acero y una suela todo terreno que te acompaña a donde vayas.",
+                marketingHook: "El botín negro definitivo para el asfalto urbano.",
+                marketingStrategy: "Calzado de moda básico indispensable. Enfoque en comodidad diaria."
+            },
+            {
+                id: "moccasin-dora",
+                category: "dama",
+                code: "MOD-10",
+                name: "Zapato de Vestir Dora Mocasín",
+                heroImage: "WhatsApp Image 2026-07-14 at 2.12.55 AM (7).jpeg",
+                altImages: "WhatsApp Image 2026-07-14 at 2.12.55 AM (6).jpeg",
+                photoFeedback: "La toma superior en paralelo muestra con excelente fidelidad la horma estilizada de vestir, el forro interno beige de Calzado Dora y el herraje metálico dorado central.",
+                designFeedback: "Incrementar sutilmente la iluminación del herraje dorado central. Aplicar desaturación selectiva a los reflejos cromáticos amarillos indeseados.",
+                marketingCopy: "Elegancia ejecutiva para tus jornadas profesionales y académicas. El mocasín clásico de vestir Dora combina un forro transpirable con un refinado adorno dorado de herradura.",
+                marketingHook: "Comodidad clásica y sofisticación sin esfuerzo.",
+                marketingStrategy: "Mercado de universitarias, maestras y profesionales de oficina."
+            },
+            {
+                id: "escolar-italia",
+                category: "dama",
+                code: "MOD-11",
+                name: "Mary Jane Escolar Italia",
+                heroImage: "WhatsApp Image 2026-07-14 at 2.12.55 AM (2).jpeg",
+                altImages: "WhatsApp Image 2026-07-14 at 2.12.55 AM (1).jpeg, WhatsApp Image 2026-07-14 at 2.12.55 AM (5).jpeg, WhatsApp Image 2026-07-14 at 2.12.55 AM (4).jpeg",
+                photoFeedback: "Ángulo lateral limpio que retrata la correa resistente de hebilla de acero y el sutil detalle delantero en relieve de flor con aplicación de cristal central.",
+                designFeedback: "ALERTA: Corregir subexposición del forro interior de piel blanca. Incrementar sombras de contacto locales bajo la suela para mayor estabilidad de catálogo.",
+                marketingCopy: "El regreso a clases con destellos de elegancia. Mary Jane Escolar 'Italia' elaborado en piel genuina suave con una hermosa aplicación de flor y cristal que adorna la puntera.",
+                marketingHook: "Diseño escolar premium que destaca en el salón de clases.",
+                marketingStrategy: "Temporada de ventas de regreso a clases de gama alta."
+            },
+            {
+                id: "escolar-leonora",
+                category: "dama",
+                code: "MOD-12",
+                name: "Mary Jane Escolar Leonora",
+                heroImage: "WhatsApp Image 2026-07-14 at 2.12.55 AM (6).jpeg",
+                altImages: "WhatsApp Image 2026-07-14 at 2.12.55 AM (7).jpeg",
+                photoFeedback: "La toma cruzada dinámica con un zapato de perfil y otro mostrando la plantilla revela de forma magnífica el interior floral icónico de Leonora y la flexibilidad de la suela.",
+                designFeedback: "Ajustar la saturación de las flores rojas y verdes de la plantilla interior para aumentar la percepción de detalle y calidad del forro interno.",
+                marketingCopy: "Elegancia escolar por fuera, alegría floral por dentro. Mary Jane Leonora cuenta con un sobrio acabado en piel sintética formal combinada con una divertida y acolchada plantilla de flores.",
+                marketingHook: "Comodidad anatómica vestida de divertido diseño floral.",
+                marketingStrategy: "Enfoque en madres jóvenes que valoran detalles de diseño y confort interior infantil."
+            },
+            {
+                id: "moccasin-velcro",
+                category: "caballero",
+                code: "MOD-13",
+                name: "Mocasín Escolar Velcro B's",
+                heroImage: "WhatsApp Image 2026-07-14 at 2.12.51 AM (5).jpeg",
+                altImages: "WhatsApp Image 2026-07-14 at 2.12.51 AM (6).jpeg, WhatsApp Image 2026-07-14 at 2.12.51 AM.jpeg",
+                photoFeedback: "Toma lateral en diagonal que muestra la robusta costura moc-toe delantera, el ajuste de tira ancha de velcro y el collarín interno acolchado.",
+                designFeedback: "Remover la suciedad y fibras adheridas en la tira de felpa del velcro. Ajustar los reflejos especulares intensos del flash de la cámara en el empeine de piel semi-brillante.",
+                marketingCopy: "La combinación perfecta de independencia y durabilidad. El zapato escolar mocasín B's cuenta con ajuste rápido de velcro reforzado, piel de alta gama y suela gruesa antiderrapante.",
+                marketingHook: "Ajuste rápido y resistencia inquebrantable para el recreo.",
+                marketingStrategy: "Enfoque en calzado escolar masculino duradero para nivel primaria."
+            },
+            {
+                id: "moccasin-gold",
+                category: "caballero",
+                code: "MOD-14",
+                name: "Mocasín de Vestir Herraje Dorado",
+                heroImage: "WhatsApp Image 2026-07-14 at 2.12.55 AM_2.jpeg",
+                altImages: "WhatsApp Image 2026-07-14 at 2.12.54 AM (6).jpeg, WhatsApp Image 2026-07-14 at 2.12.54 AM (9).jpeg",
+                photoFeedback: "Encuadre lateral clásico de perfil que retrata de manera elegante la silueta slip-on, la suela cosida reforzada y la hebilla metálica dorada de herradura.",
+                designFeedback: "Aplicar la técnica de Dodge & Burn en la hebilla dorada delantera para realzar la textura del metal. Alinear la orientación horizontal de la suela con respecto al horizonte.",
+                marketingCopy: "Elegancia y porte sin cordones para eventos formales y escolares de grados superiores. Elaborado con piel de alta durabilidad y un refinado adorno dorado estilo horsebit.",
+                marketingHook: "El mocasín elegante diseñado para brillar en ocasiones especiales.",
+                marketingStrategy: "Mercado escolar de nivel secundaria/preparatoria y eventos de gala familiar."
+            }
+        ];
+
+        // RENDER PRODUCTS
+        function renderProducts(productsToRender) {
+            const grid = document.getElementById('productGrid');
+            grid.innerHTML = "";
+
+            if (productsToRender.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-1 md:col-span-3 text-center py-12 bg-slate-950 rounded-3xl border border-slate-800">
+                        <i class="fa-solid fa-triangle-exclamation text-slate-600 text-3xl mb-3"></i>
+                        <h4 class="text-slate-200 font-bold">No se encontraron productos</h4>
+                        <p class="text-slate-500 text-xs mt-1">Prueba refinando los filtros o buscando con otra palabra clave.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            productsToRender.forEach(p => {
+                const card = document.createElement('div');
+                card.className = "product-card bg-slate-950 rounded-3xl border border-slate-800 overflow-hidden group hover:border-teal-500/30 transition-all duration-300 flex flex-col shadow-lg";
+                card.setAttribute('data-category', p.category);
+                
+                // Get clean short filename
+                const shortHero = p.heroImage.replace("WhatsApp Image 2026-07-14 at ", "WA-... ");
+
+                card.innerHTML = `
+                    <div class="p-4 border-b border-slate-800 flex justify-between items-center bg-slate-900/40">
+                        <span class="text-[10px] font-extrabold tracking-widest text-teal-400 uppercase">${p.category}</span>
+                        <span class="text-xs text-slate-500 font-mono">${p.code}</span>
+                    </div>
+                    <div class="p-6 flex-grow space-y-4">
+                        <div class="bg-slate-900 rounded-2xl p-4 border border-slate-800 text-center relative overflow-hidden transition-all duration-300 group-hover:bg-slate-900/60">
+                            <span class="absolute top-2 left-2 text-[9px] bg-slate-950/80 px-2 py-0.5 rounded text-teal-400 font-mono">Toma Hero Seleccionada</span>
+                            <div class="text-[10px] font-mono text-slate-300 break-all my-6 select-all font-semibold px-2">${shortHero}</div>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-bold text-slate-100 group-hover:text-teal-400 transition-colors">${p.name}</h4>
+                            <p class="text-xs text-slate-400 mt-1 line-clamp-2">${p.marketingCopy}</p>
+                        </div>
+                        <!-- Mini Details -->
+                        <div class="border-t border-slate-800/60 pt-4 space-y-3 text-xs">
+                            <div>
+                                <span class="text-slate-500 uppercase font-bold text-[9px] tracking-wider block">Diseñador</span>
+                                <p class="text-slate-300 mt-0.5 line-clamp-2">${p.designFeedback}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Actions -->
+                    <div class="p-4 border-t border-slate-800 bg-slate-900/20 grid grid-cols-2 gap-2">
+                        <button onclick="selectForSimulator('${p.id}')" class="px-3 py-2 bg-slate-900 hover:bg-slate-850 rounded-xl text-[11px] font-bold text-slate-300 transition-all border border-slate-800 flex items-center justify-center gap-1.5">
+                            <i class="fa-solid fa-wand-magic-sparkles text-teal-400"></i>
+                            <span>Simular Retoque</span>
+                        </button>
+                        <button onclick="openDetailModal('${p.id}')" class="px-3 py-2 bg-teal-400 hover:bg-teal-300 rounded-xl text-[11px] font-bold text-slate-950 transition-all flex items-center justify-center gap-1.5">
+                            <i class="fa-solid fa-circle-info"></i>
+                            <span>Ver Ficha Lote</span>
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // GLOBAL STATES
+        let currentCategory = "all";
+        let activeSelectedProduct = productsData[0];
+
+        // FILTER FUNCTIONS
+        function switchCategory(cat) {
+            currentCategory = cat;
+            const tabs = document.querySelectorAll('.category-tab');
+            tabs.forEach(tab => {
+                tab.classList.remove('bg-teal-400', 'text-slate-950');
+                tab.classList.add('text-slate-400', 'hover:text-slate-100');
+            });
+
+            const activeTab = document.getElementById(`tab-${cat}`);
+            activeTab.classList.remove('text-slate-400', 'hover:text-slate-100');
+            activeTab.classList.add('bg-teal-400', 'text-slate-950');
+
+            filterProducts();
+        }
+
+        function filterProducts() {
+            const searchQuery = document.getElementById('searchInput').value.toLowerCase().trim();
+            const filtered = productsData.filter(p => {
+                const matchesCategory = (currentCategory === 'all' || p.category === currentCategory);
+                const matchesSearch = p.name.toLowerCase().includes(searchQuery) || 
+                                      p.code.toLowerCase().includes(searchQuery) ||
+                                      p.heroImage.toLowerCase().includes(searchQuery) ||
+                                      p.altImages.toLowerCase().includes(searchQuery);
+                return matchesCategory && matchesSearch;
+            });
+            renderProducts(filtered);
+        }
+
+        // SIMULATOR INTERACTIVITY
+        function toggleRetouch() {
+            const original = document.getElementById('originalBg');
+            const retouched = document.getElementById('retouchedBg');
+            const toggleDot = document.getElementById('toggleDot');
+            const retouchBtn = document.getElementById('retouchBtn');
+            const statusBadge = document.getElementById('statusBadge');
+            const shadowSim = document.getElementById('shadowSim');
+            const shoeSim = document.getElementById('shoeSim');
+
+            if (original.style.opacity === '0' || original.classList.contains('opacity-0')) {
+                // Show Original
+                original.classList.remove('opacity-0');
+                retouched.classList.add('opacity-0');
+                toggleDot.classList.remove('translate-x-6');
+                toggleDot.classList.add('translate-x-0');
+                retouchBtn.classList.remove('bg-teal-500');
+                retouchBtn.classList.add('bg-slate-800');
+                statusBadge.textContent = 'Vista Original (Felpa)';
+                shadowSim.classList.add('scale-0');
+                shoeSim.classList.remove('-rotate-6');
+                shoeSim.classList.add('-rotate-12');
+            } else {
+                // Show Retouched
+                original.classList.add('opacity-0');
+                retouched.classList.remove('opacity-0');
+                toggleDot.classList.remove('translate-x-0');
+                toggleDot.classList.add('translate-x-6');
+                retouchBtn.classList.remove('bg-slate-800');
+                retouchBtn.classList.add('bg-teal-500');
+                statusBadge.textContent = 'Retoque Profesional';
+                shadowSim.classList.remove('scale-0');
+                shoeSim.classList.remove('-rotate-12');
+                shoeSim.classList.add('-rotate-6');
+            }
+        }
+
+        function selectForSimulator(id) {
+            const product = productsData.find(p => p.id === id);
+            if (!product) return;
+            
+            activeSelectedProduct = product;
+
+            // Scroll to simulator
+            document.getElementById('simulator-section').scrollIntoView({ behavior: 'smooth' });
+
+            // Update Titles & Info in Simulator
+            const shortFile = product.heroImage.replace("WhatsApp Image 2026-07-14 at ", "WA-... ");
+            document.getElementById('sim-title-orig').textContent = product.name;
+            document.getElementById('sim-title-ret').textContent = product.name;
+            document.getElementById('sim-file-orig').textContent = shortFile;
+
+            // Build dynamic controls instructions for the specific shoe
+            const instContainer = document.getElementById('sim-instructions');
+            instContainer.innerHTML = `
+                <p class="flex gap-2 items-start"><span class="text-teal-400 font-bold"><i class="fa-solid fa-check"></i></span> <span><strong>Trazado de Pluma:</strong> Recorte perfecto en la horma del calzado.</span></p>
+                <p class="flex gap-2 items-start"><span class="text-teal-400 font-bold"><i class="fa-solid fa-check"></i></span> <span><strong>Retoque Específico:</strong> ${product.designFeedback}</span></p>
+                <p class="flex gap-2 items-start"><span class="text-teal-400 font-bold"><i class="fa-solid fa-check"></i></span> <span><strong>Encuadre Fotógrafo:</strong> ${product.photoFeedback}</span></p>
+            `;
+
+            // Reset simulator display to original first
+            const original = document.getElementById('originalBg');
+            const retouched = document.getElementById('retouchedBg');
+            const toggleDot = document.getElementById('toggleDot');
+            const retouchBtn = document.getElementById('retouchBtn');
+            const statusBadge = document.getElementById('statusBadge');
+            const shadowSim = document.getElementById('shadowSim');
+            const shoeSim = document.getElementById('shoeSim');
+
+            original.classList.remove('opacity-0');
+            retouched.classList.add('opacity-0');
+            toggleDot.classList.remove('translate-x-6');
+            toggleDot.classList.add('translate-x-0');
+            retouchBtn.classList.remove('bg-teal-500');
+            retouchBtn.classList.add('bg-slate-800');
+            statusBadge.textContent = 'Vista Original (Felpa)';
+            shadowSim.classList.add('scale-0');
+            shoeSim.classList.remove('-rotate-6');
+            shoeSim.classList.add('-rotate-12');
+        }
+
+        // DETAILED MODAL ACTIONS
+        function openDetailModal(id) {
+            const product = productsData.find(p => p.id === id);
+            if (!product) return;
+
+            activeSelectedProduct = product; // Track for simulator selection in modal
+
+            document.getElementById('modalCategory').textContent = product.category;
+            document.getElementById('modalCode').textContent = product.code;
+            document.getElementById('modalName').textContent = product.name;
+            document.getElementById('modalHeroFile').textContent = product.heroImage;
+            document.getElementById('modalAltFiles').textContent = product.altImages || "Sin tomas adicionales";
+            document.getElementById('modalPhotoFeedback').textContent = product.photoFeedback;
+            document.getElementById('modalDesignFeedback').textContent = product.designFeedback;
+            document.getElementById('modalMarketingCopy').textContent = `"${product.marketingCopy}"`;
+            document.getElementById('modalMarketingHook').textContent = product.marketingHook;
+            document.getElementById('modalMarketingStrategy').textContent = product.marketingStrategy;
+
+            document.getElementById('detailModal').classList.remove('hidden');
+        }
+
+        function closeDetailModal() {
+            document.getElementById('detailModal').classList.add('hidden');
+        }
+
+        function selectForSimulatorFromModal() {
+            if (activeSelectedProduct) {
+                selectForSimulator(activeSelectedProduct.id);
+                closeDetailModal();
+            }
+        }
+
+        function copyMarketingText() {
+            if (!activeSelectedProduct) return;
+            const fullText = `Modelo: ${activeSelectedProduct.name}\nCódigo: ${activeSelectedProduct.code}\nDescripción: ${activeSelectedProduct.marketingCopy}\nFrase Hook: ${activeSelectedProduct.marketingHook}`;
+            navigator.clipboard.writeText(fullText).then(() => {
+                alert("¡Copiado al portapapeles con éxito!");
+            }).catch(err => {
+                console.error("Error al copiar: ", err);
+            });
+        }
+
+        // UPLOAD MODAL HELPER
+        function openUploadGuideline() {
+            document.getElementById('uploadModal').classList.remove('hidden');
+        }
+
+        function closeUploadModal() {
+            document.getElementById('uploadModal').classList.add('hidden');
+        }
+
+        // INITIALIZE APP
+        window.addEventListener('DOMContentLoaded', () => {
+            renderProducts(productsData);
+        });
+    </script>
+</body>
+</html>
