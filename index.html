@@ -46,15 +46,15 @@
         const whatsappNumber = "525638737731"; 
         let currentFilter = 'all';
         
-        // Base de datos con categorías fijas para evitar errores de cruce
+        // Base de datos con IDs únicos para evitar errores de selección
         const productsData = [
             { id: 1, name: "Balerina Lulú", category: "woman", material: "Sintético", price: 300, heroImage: "https://i.ibb.co/rK3hx71H/VALERINA-LISO-1-CORREA-NI-A.png", sizes: [24, 26] },
             { id: 2, name: "Escolar Moño", category: "girls", material: "Piel", price: 450, heroImage: "https://i.ibb.co/7tk4ffdZ/535-HEBILLA-MO-O-PIEL-NI-A.png", sizes: [19.5, 20, 21.5] },
-            { id: 3, name: "Escolar BS 2", category: "boys", material: "Piel", price: 450, heroImage: "https://i.ibb.co/gZHcDwyF/316-2-CORREAS-PIEL-NI-O.jpg", sizes: [17, 20] },
-            { id: 3, name: "Escolar BS 2", category: "men", material: "Piel", price: 450, heroImage: "https://i.ibb.co/gZHcDwyF/316-2-CORREAS-PIEL-NI-O.jpg", sizes: [23, 24, 25.5] },
+            { id: 3, name: "Escolar BS 2 (Niños)", category: "boys", material: "Piel", price: 450, heroImage: "https://i.ibb.co/gZHcDwyF/316-2-CORREAS-PIEL-NI-O.jpg", sizes: [17, 20] },
+            { id: 32, name: "Escolar BS 2 (Caballero)", category: "men", material: "Piel", price: 450, heroImage: "https://i.ibb.co/hGm02Cb/0c56947d-2290-4d0d-a227-5f9d2df6fac9.png", sizes: [23, 24, 25.5] },
             { id: 4, name: "Escolar Bs 1a", category: "boys", material: "Piel", price: 450, heroImage: "https://i.ibb.co/hJw3hfQM/306-CORDON-PIEL-NI-O.jpg", sizes: [16, 17.5, 18, 20.5, 21] },
-            { id: 5, name: "Escolar BS 1", category: "boys", material: "Piel", price: 450, heroImage: "https://i.ibb.co/997Lq1BF/206-1-CORREA-PIEL-NI-O.jpg", sizes: [16, 17] },
-            { id: 5, name: "Escolar BS 1", category: "men", material: "Piel", price: 450, heroImage: "https://i.ibb.co/997Lq1BF/206-1-CORREA-PIEL-NI-O.jpg", sizes: [22.5, 23.5, 24] },
+            { id: 5, name: "Escolar BS 1 (Niños)", category: "boys", material: "Piel", price: 450, heroImage: "https://i.ibb.co/997Lq1BF/206-1-CORREA-PIEL-NI-O.jpg", sizes: [16, 17] },
+            { id: 52, name: "Escolar BS 1 (Caballero)", category: "men", material: "Piel", price: 450, heroImage: "https://i.ibb.co/S79TLjQS/fbbadaf5-cdd5-4e86-b4cd-f261dc86dec2.png", sizes: [22.5, 23.5, 24] },
             { id: 6, name: "Italia Flor", category: "girls", material: "Piel", price: 450, heroImage: "https://i.ibb.co/Y4Wy7jMN/101-1-CORREA-FLOR-PIEL-NI-A.png", sizes: [15, 15.5, 16, 17, 17.5, 19.5] },
             { id: 7, name: "Italia Diamante", category: "girls", material: "Piel", price: 450, heroImage: "https://i.ibb.co/V04tS8MB/106-DIAMANTITO-PIEL-NI-A.png", sizes: [20, 21] },
             { id: 8, name: "Dumas Charol", category: "woman", material: "Sintético", price: 450, heroImage: "https://i.ibb.co/RGX2gXVJ/DUMAS-CHAROL.png", sizes: [23, 25, 26] },
@@ -180,6 +180,9 @@
             document.getElementById('modalTitle').innerText = product.name;
             document.getElementById('modalPrice').innerText = "$" + product.price;
             
+            // Corrección: Esta línea ahora sí conecta el material con el HTML
+            document.getElementById('modalMaterial').innerText = "Material: " + product.material;
+            
             const select = document.getElementById('sizeSelector');
             select.innerHTML = '<option value="">Selecciona una talla</option>';
             product.sizes.sort((a,b) => a-b).forEach(s => {
@@ -202,8 +205,9 @@
             <button onclick="closeModal()" class="absolute top-4 right-4"><i class="fas fa-times text-2xl"></i></button>
             <img id="modalImg" class="w-full h-64 object-cover rounded-2xl mb-4">
             <h2 id="modalTitle" class="text-2xl font-bold mb-1"></h2>
-            <p id="modalPrice" class="text-green-600 font-bold text-xl mb-4"></p>
-            
+            <p id="modalMaterial" class="text-gray-600 text-sm mb-4"></p>
+            <p id="modalPrice" class="text-green-600 font-bold text-xl mb-1"></p>
+             
             <label class="block text-sm font-bold text-gray-700 mb-2">Selecciona tu talla:</label>
             <select id="sizeSelector" class="w-full p-3 border rounded-xl mb-6"></select>
 
