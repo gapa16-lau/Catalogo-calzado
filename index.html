@@ -30,13 +30,21 @@
         <div class="flex flex-col gap-4 mb-8">
             <input type="text" id="searchInput" placeholder="Buscar modelos..." class="p-4 rounded-xl w-full border border-gray-200 focus:ring-2 focus:ring-black outline-none shadow-sm">
             
-            <div class="flex gap-2 overflow-x-auto pb-2">
-                <button onclick="setFilter('all')" id="btn-all" class="filter-btn active px-4 py-2 rounded-full border border-gray-300 text-sm font-bold whitespace-nowrap">Todos</button>
-                <button onclick="setFilter('girls')" id="btn-girls" class="filter-btn px-4 py-2 rounded-full border border-gray-300 text-sm font-bold whitespace-nowrap">Niñas</button>
-                <button onclick="setFilter('boys')" id="btn-boys" class="filter-btn px-4 py-2 rounded-full border border-gray-300 text-sm font-bold whitespace-nowrap">Niños</button>
-                <button onclick="setFilter('woman')" id="btn-woman" class="filter-btn px-4 py-2 rounded-full border border-gray-300 text-sm font-bold whitespace-nowrap">Mujer</button>
-                <button onclick="setFilter('men')" id="btn-men" class="filter-btn px-4 py-2 rounded-full border border-gray-300 text-sm font-bold whitespace-nowrap">Caballero</button>
-                <button onclick="setFilter('tenis')" id="btn-tenis" class="filter-btn px-4 py-2 rounded-full border border-gray-300 text-sm font-bold whitespace-nowrap">Tenis</button>
+            <div class="flex flex-col md:flex-row gap-4 justify-between items-center">
+                <div class="flex gap-2 overflow-x-auto pb-2 w-full md:w-auto">
+                    <button onclick="setFilter('all')" id="btn-all" class="filter-btn active px-4 py-2 rounded-full border border-gray-300 text-sm font-bold whitespace-nowrap">Todos</button>
+                    <button onclick="setFilter('girls')" id="btn-girls" class="filter-btn px-4 py-2 rounded-full border border-gray-300 text-sm font-bold whitespace-nowrap">Niñas</button>
+                    <button onclick="setFilter('boys')" id="btn-boys" class="filter-btn px-4 py-2 rounded-full border border-gray-300 text-sm font-bold whitespace-nowrap">Niños</button>
+                    <button onclick="setFilter('woman')" id="btn-woman" class="filter-btn px-4 py-2 rounded-full border border-gray-300 text-sm font-bold whitespace-nowrap">Mujer</button>
+                    <button onclick="setFilter('men')" id="btn-men" class="filter-btn px-4 py-2 rounded-full border border-gray-300 text-sm font-bold whitespace-nowrap">Caballero</button>
+                    <button onclick="setFilter('tenis')" id="btn-tenis" class="filter-btn px-4 py-2 rounded-full border border-gray-300 text-sm font-bold whitespace-nowrap">Tenis</button>
+                </div>
+                
+                <div class="w-full md:w-48">
+                    <select id="sizeFilter" onchange="renderProducts(document.getElementById('searchInput').value)" class="p-3 rounded-xl w-full border border-gray-200 bg-white text-sm font-bold focus:ring-2 focus:ring-black outline-none shadow-sm cursor-pointer">
+                        <option value="all">Todas las tallas</option>
+                    </select>
+                </div>
             </div>
         </div>
         <div id="productGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"></div>
@@ -85,6 +93,19 @@
 
         let cart = [];
 
+        // Poblar dinámicamente el selector de tallas con todas las tallas únicas ordenadas
+        function initSizeFilter() {
+            const sizeSelect = document.getElementById('sizeFilter');
+            const allSizes = new Set();
+            productsData.forEach(p => p.sizes.forEach(s => allSizes.add(s)));
+            const sortedSizes = Array.from(allSizes).sort((a, b) => a - b);
+            
+            sizeSelect.innerHTML = '<option value="all">Todas las tallas</option>';
+            sortedSizes.forEach(size => {
+                sizeSelect.innerHTML += `<option value="${size}">Talla ${size}</option>`;
+            });
+        }
+
         function setFilter(filter) {
             currentFilter = filter;
             document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
@@ -94,12 +115,14 @@
 
         function renderProducts(search = '') {
             const grid = document.getElementById('productGrid');
+            const selectedSize = document.getElementById('sizeFilter').value;
             grid.innerHTML = '';
             
             const filtered = productsData.filter(p => {
                 const matchesSearch = p.name.toLowerCase().includes(search.toLowerCase());
                 const matchesCategory = (currentFilter === 'all' || p.category === currentFilter);
-                return matchesSearch && matchesCategory;
+                const matchesSize = (selectedSize === 'all' || p.sizes.includes(parseFloat(selectedSize)));
+                return matchesSearch && matchesCategory && matchesSize;
             });
 
             filtered.forEach(p => {
@@ -179,8 +202,6 @@
             document.getElementById('modalImg').src = product.heroImage;
             document.getElementById('modalTitle').innerText = product.name;
             document.getElementById('modalPrice').innerText = "$" + product.price;
-            
-            // Corrección: Esta línea ahora sí conecta el material con el HTML
             document.getElementById('modalMaterial').innerText = "Material: " + product.material;
             
             const select = document.getElementById('sizeSelector');
@@ -197,6 +218,9 @@
         function toggleCart() { document.getElementById('cartModal').classList.toggle('active'); }
 
         document.getElementById('searchInput').addEventListener('input', (e) => renderProducts(e.target.value));
+        
+        // Inicializar filtros y catálogo al cargar
+        initSizeFilter();
         renderProducts();
     </script>
 
