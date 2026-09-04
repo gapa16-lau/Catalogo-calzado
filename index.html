@@ -8,7 +8,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
-            --bg-main: #fcf9f5; /* Crema suave cálido inspirado en el fondo texturizado del logo */
+            --bg-main: #fcf9f5;
             --accent-peach: #e8a598;
             --accent-navy: #1f3159;
         }
@@ -62,13 +62,13 @@
                     <button onclick="setFilter('woman')" id="btn-woman" class="filter-btn px-4 py-2 rounded-full border border-gray-300 text-sm font-bold whitespace-nowrap shadow-xs">Mujer</button>
                     <button onclick="setFilter('men')" id="btn-men" class="filter-btn px-4 py-2 rounded-full border border-gray-300 text-sm font-bold whitespace-nowrap shadow-xs">Caballero</button>
                     <button onclick="setFilter('tenis')" id="btn-tenis" class="filter-btn px-4 py-2 rounded-full border border-gray-300 text-sm font-bold whitespace-nowrap shadow-xs">Tenis</button>
-                    <button onclick="setFilter('mochilas')" id="btn-mochilas" class="filter-btn px-4 py-2 rounded-full border border-blue-300 text-blue-600 bg-blue-50 text-sm font-bold whitespace-nowrap shadow-xs">🎒 Mochilas</button>
+                    <button onclick="setFilter('mochila')" id="btn-mochila" class="filter-btn px-4 py-2 rounded-full border border-blue-300 text-blue-600 bg-blue-50 text-sm font-bold whitespace-nowrap shadow-xs">🎒 Mochilas</button>
                     <button onclick="setFilter('pedido')" id="btn-pedido" class="filter-btn px-4 py-2 rounded-full border border-red-300 text-red-600 bg-red-50 text-sm font-bold whitespace-nowrap shadow-xs">✨ Sobre Pedido</button>
                 </div>
                 
                 <div class="w-full md:w-48">
                     <select id="sizeFilter" onchange="renderProducts(document.getElementById('searchInput').value)" class="p-3 rounded-xl w-full border border-orange-200 bg-white text-sm font-bold focus:ring-2 focus:ring-[#1f3159] outline-none shadow-sm cursor-pointer">
-                        <option value="all">Todas las tallas</option>
+                        <option value="all">Todas las tallas / medidas</option>
                     </select>
                 </div>
             </div>
@@ -130,11 +130,11 @@
             { id: 39, name: "Tortuga", category: "tenis", material: "Sintético", price: 650, heroImage: "https://i.ibb.co/cSxZvXHh/Gemini-Generated-Image-kcm07okcm07okcm0.jpg", sizes: [25.5, 27, 28] },
             { id: 40, name: "Campusul", category: "tenis", material: "Sintético", price: 500, heroImage: "https://i.ibb.co/1GCfrYHq/Whats-App-Image-2026-09-03-at-5-51-42-PM-1.png", sizes: [22, 23] },
             { id: 41, name: "campngo", category: "tenis", material: "Sintético", price: 500, heroImage: "https://i.ibb.co/DPmpy5Ns/Gemini-Generated-Image-5rnz55rnz55rnz55.jpg", sizes: [23] },
-            { id: 42, name: "Jordan rosa", category: "mochilas", material: "Sintético", price: 450, heroImage: "https://i.ibb.co/3mYR9ScN/Gemini-Generated-Image-kpdsy1kpdsy1kpds.jpg", sizes: ["Alto 45 cm"] },
-            { id: 43, name: "Nike gris", category: "mochilas", material: "Sintético", price: 350, heroImage: "https://i.ibb.co/pvkVzJbz/Gemini-Generated-Image-tue0i8tue0i8tue0.jpg", sizes: ["Alto 42 cm"] },
-            { id: 44, name: "Cloud", category: "mochilas", material: "Sintético", price: 450, heroImage: "https://i.ibb.co/RJrTkRc/Gemini-Generated-Image-maqzbfmaqzbfmaqz.jpg", sizes: ["Alto 43 cm"] },
-            { id: 45, name: "Marivlas", category: "mochilas", material: "Sintético", price: 350, heroImage: "https://i.ibb.co/rR2JMHdT/Gemini-Generated-Image-si5nkfsi5nkfsi5n-1.jpg", sizes: ["Alto 47 cm"] },
-            { id: 46, name: "Nike rosa", category: "mochilas", material: "Lona sencilla", price: 250, heroImage: "https://i.ibb.co/1fZSZ0N7/Gemini-Generated-Image-jiqaihjiqaihjiqa-1.jpg", sizes: ["Alto 44.5 cm"] },
+            { id: 42, name: "Jordan rosa", category: "mochila", material: "Sintético", price: 450, heroImage: "https://i.ibb.co/3mYR9ScN/Gemini-Generated-Image-kpdsy1kpdsy1kpds.jpg", sizes: ["Alto 45 cm"] },
+            { id: 43, name: "Nike gris", category: "mochila", material: "Sintético", price: 350, heroImage: "https://i.ibb.co/pvkVzJbz/Gemini-Generated-Image-tue0i8tue0i8tue0.jpg", sizes: ["Alto 42 cm"] },
+            { id: 44, name: "Cloud", category: "mochila", material: "Sintético", price: 450, heroImage: "https://i.ibb.co/RJrTkRc/Gemini-Generated-Image-maqzbfmaqzbfmaqz.jpg", sizes: ["Alto 43 cm"] },
+            { id: 45, name: "Marivlas", category: "mochila", material: "Sintético", price: 350, heroImage: "https://i.ibb.co/rR2JMHdT/Gemini-Generated-Image-si5nkfsi5nkfsi5n-1.jpg", sizes: ["Alto 47 cm"] },
+            { id: 46, name: "Nike rosa", category: "mochila", material: "Lona sencilla", price: 250, heroImage: "https://i.ibb.co/1fZSZ0N7/Gemini-Generated-Image-jiqaihjiqaihjiqa-1.jpg", sizes: ["Alto 44.5 cm"] },
             { id: 201, name: "Harry Potter", category: "pedido", material: "Sintético", price: 550, heroImage: "https://i.ibb.co/m50mgXYw/tenis-bordado-page-0024.jpg", sizes: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], isPreorder: true },
             { id: 202, name: "Harry Potter 2", category: "pedido", material: "Sintético", price: 550, heroImage: "https://i.ibb.co/9HvSZSzs/tenis-bordado-page-0025.jpg", sizes: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], isPreorder: true },
             { id: 203, name: "Hello Kitty", category: "pedido", material: "Sintético", price: 550, heroImage: "https://i.ibb.co/Xr884YbG/tenis-bordado-page-0026.jpg", sizes: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], isPreorder: true },
