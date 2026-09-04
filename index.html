@@ -11,6 +11,8 @@
         .modal.active { display: flex; }
         .cart-modal { display: none; }
         .cart-modal.active { display: flex; }
+        .zoom-modal { display: none; }
+        .zoom-modal.active { display: flex; }
         .filter-btn.active { background-color: #000; color: #fff; }
     </style>
 </head>
@@ -32,7 +34,7 @@
             <i class="fab fa-facebook text-blue-600 text-lg"></i>
             <span>Síguenos en Facebook: Zapatería MarIv 👉</span>
         </a>
-        <input type="text" id="searchInput" placeholder="Buscar modelos..." class="p-4 rounded-xl w-full border border-gray-200 focus:ring-2 focus:ring-black outline-none bg-white shadow-sm">
+        <input type="text" id="searchInput" placeholder="Buscar modelos o diseños..." class="p-4 rounded-xl w-full border border-gray-200 focus:ring-2 focus:ring-black outline-none bg-white shadow-sm">
         
         <div class="flex flex-col md:flex-row gap-4 justify-between items-center">
                 <div class="flex gap-2 overflow-x-auto pb-2 w-full md:w-auto scrollbar-none">
@@ -42,6 +44,8 @@
                     <button onclick="setFilter('woman')" id="btn-woman" class="filter-btn px-4 py-2 rounded-full border border-gray-300 text-sm font-bold whitespace-nowrap">Mujer</button>
                     <button onclick="setFilter('men')" id="btn-men" class="filter-btn px-4 py-2 rounded-full border border-gray-300 text-sm font-bold whitespace-nowrap">Caballero</button>
                     <button onclick="setFilter('tenis')" id="btn-tenis" class="filter-btn px-4 py-2 rounded-full border border-gray-300 text-sm font-bold whitespace-nowrap">Tenis</button>
+                    <button onclick="setFilter('mochilas')" id="btn-mochilas" class="filter-btn px-4 py-2 rounded-full border border-blue-300 text-blue-600 bg-blue-50 text-sm font-bold whitespace-nowrap">🎒 Mochilas</button>
+                    <button onclick="setFilter('pedido')" id="btn-pedido" class="filter-btn px-4 py-2 rounded-full border border-red-300 text-red-600 bg-red-50 text-sm font-bold whitespace-nowrap">✨ Sobre Pedido</button>
                 </div>
                 
                 <div class="w-full md:w-48">
@@ -70,6 +74,21 @@
         let currentFilter = 'all';
         
         const productsData = [
+            { id: 34, name: "Dama Confort liso", category: "woman", material: "Piel de borrego suave", price: 550, heroImage: "https://i.ibb.co/LhXW6RQg/Whats-App-Image-2026-09-02-at-2-23-35-PM-5.png", sizes: [25] },
+            { id: 35, name: "Dama Confort flores", category: "woman", material: "Piel de borrego suave", price: 550, heroImage: "https://i.ibb.co/HT3wf8TC/Whats-App-Image-2026-09-02-at-2-23-34-PM-2.png", sizes: [24] },
+            { id: 36, name: "Vestir caballero", category: "men", material: "Piel", price: 550, heroImage: "https://i.ibb.co/YBrPN02r/Whats-App-Image-2026-09-02-at-2-23-34-PM.png", sizes: [26, 27] },
+            { id: 37, name: "Tenis bordado Pokemon", category: "tenis", material: "Sintético", price: 550, heroImage: "https://i.ibb.co/M56RyGSJ/Whats-App-Image-2026-09-02-at-2-23-36-PM.png", sizes: [23] },
+            { id: 38, name: "Tenis bordado Roblox", category: "tenis", material: "Sintético", price: 550, heroImage: "https://i.ibb.co/tp1t1JDg/Whats-App-Image-2026-09-02-at-2-23-35-PM.png", sizes: [24] },
+            { id: 39, name: "Tortuga", category: "tenis", material: "Sintético", price: 650, heroImage: "https://i.ibb.co/cSxZvXHh/Gemini-Generated-Image-kcm07okcm07okcm0.jpg", sizes: [25.5, 27, 28] },
+            { id: 40, name: "Campusul", category: "tenis", material: "Sintético", price: 500, heroImage: "https://i.ibb.co/1GCfrYHq/Whats-App-Image-2026-09-03-at-5-51-42-PM-1.png", sizes: [22, 23] },
+            { id: 41, name: "campngo", category: "tenis", material: "Sintético", price: 500, heroImage: "https://i.ibb.co/DPmpy5Ns/Gemini-Generated-Image-5rnz55rnz55rnz55.jpg", sizes: [23] },
+
+            { id: 42, name: "Jordan rosa", category: "mochilas", material: "Sintético", price: 450, heroImage: "https://i.ibb.co/3mYR9ScN/Gemini-Generated-Image-kpdsy1kpdsy1kpds.jpg", sizes: ["Alto 45 cm"] },
+            { id: 43, name: "Nike gris", category: "mochilas", material: "Sintético", price: 350, heroImage: "https://i.ibb.co/pvkVzJbz/Gemini-Generated-Image-tue0i8tue0i8tue0.jpg", sizes: ["Alto 42 cm"] },
+            { id: 44, name: "Cloud", category: "mochilas", material: "Sintético", price: 450, heroImage: "https://i.ibb.co/RJrTkRc/Gemini-Generated-Image-maqzbfmaqzbfmaqz.jpg", sizes: ["Alto 43 cm"] },
+            { id: 45, name: "Marivlas", category: "mochilas", material: "Sintético", price: 350, heroImage: "https://i.ibb.co/rR2JMHdT/Gemini-Generated-Image-si5nkfsi5nkfsi5n-1.jpg", sizes: ["Alto 47 cm"] },
+            { id: 46, name: "Nike rosa", category: "mochilas", material: "Lona sencilla", price: 250, heroImage: "https://i.ibb.co/1fZSZ0N7/Gemini-Generated-Image-jiqaihjiqaihjiqa-1.jpg", sizes: ["Alto 44.5 cm"] },
+
             { id: 1, name: "Balerina Lulú", category: "woman", material: "Sintético", price: 300, heroImage: "https://i.ibb.co/rK3hx71H/VALERINA-LISO-1-CORREA-NI-A.png", sizes: [24, 26] },
             { id: 2, name: "Escolar Moño", category: "girls", material: "Piel", price: 450, heroImage: "https://i.ibb.co/7tk4ffdZ/535-HEBILLA-MO-O-PIEL-NI-A.png", sizes: [19.5, 20, 21.5] },
             { id: 3, name: "Escolar BS 2 (Niños)", category: "boys", material: "Piel", price: 450, heroImage: "https://i.ibb.co/gZHcDwyF/316-2-CORREAS-PIEL-NI-O.jpg", sizes: [17, 20] },
@@ -102,7 +121,68 @@
             { id: 28, name: "Tenis Sammba Negro", category: "tenis", material: "Sintético", price: 550, heroImage: "https://i.ibb.co/JWwvj9J2/SAMBA-NGO.jpg", sizes: [25.5] },
             { id: 29, name: "Tenis Campus Lila c/flores", category: "tenis", material: "Sintético", price: 550, heroImage: "https://i.ibb.co/z1SNhLf/CAMPUS-LILA.png", sizes: [23.5, 24.5] },
             { id: 30, name: "Tenis Campus Negro", category: "tenis", material: "Sintético", price: 550, heroImage: "https://i.ibb.co/0yPPjSkV/CAMPUS-NGO.png", sizes: [24.5, 25.5] },
-            { id: 31, name: "Tenis Campus Marino", category: "tenis", material: "Sintético", price: 550, heroImage: "https://i.ibb.co/RGm4W1pn/CAMPUS-MARINO.jpg", sizes: [23] }
+            { id: 31, name: "Tenis Campus Marino", category: "tenis", material: "Sintético", price: 550, heroImage: "https://i.ibb.co/RGm4W1pn/CAMPUS-MARINO.jpg", sizes: [23] },
+
+            { id: 201, name: "Bordados Pedido 24", category: "pedido", material: "Sintético", price: 550, heroImage: "https://i.ibb.co/m50mgXYw/tenis-bordado-page-0024.jpg", sizes: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], isPreorder: true },
+            { id: 202, name: "Bordados Pedido 25", category: "pedido", material: "Sintético", price: 550, heroImage: "https://i.ibb.co/9HvSZSzs/tenis-bordado-page-0025.jpg", sizes: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], isPreorder: true },
+            { id: 203, name: "Bordados Pedido 26", category: "pedido", material: "Sintético", price: 550, heroImage: "https://i.ibb.co/Xr884YbG/tenis-bordado-page-0026.jpg", sizes: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], isPreorder: true },
+            { id: 204, name: "Bordados Pedido 27", category: "pedido", material: "Sintético", price: 550, heroImage: "https://i.ibb.co/6JfTCBSV/tenis-bordado-page-0027.jpg", sizes: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], isPreorder: true },
+            { id: 205, name: "Bordados Pedido 28", category: "pedido", material: "Sintético", price: 550, heroImage: "https://i.ibb.co/m5PcMcZn/tenis-bordado-page-0028.jpg", sizes: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], isPreorder: true },
+            { id: 206, name: "Bordados Pedido 29", category: "pedido", material: "Sintético", price: 550, heroImage: "https://i.ibb.co/ds9tNK8Z/tenis-bordado-page-0029.jpg", sizes: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], isPreorder: true },
+            { id: 207, name: "Bordados Pedido 30", category: "pedido", material: "Sintético", price: 550, heroImage: "https://i.ibb.co/G4n1nfWF/tenis-bordado-page-0030.jpg", sizes: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], isPreorder: true },
+            { id: 208, name: "Bordados Pedido 31", category: "pedido", material: "Sintético", price: 550, heroImage: "https://i.ibb.co/Rkqn04df/tenis-bordado-page-0031.jpg", sizes: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], isPreorder: true },
+            { id: 209, name: "Bordados Pedido 32", category: "pedido", material: "Sintético", price: 550, heroImage: "https://i.ibb.co/8DsrQ7q6/tenis-bordado-page-0032.jpg", sizes: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], isPreorder: true },
+            { id: 210, name: "Bordados Pedido 33", category: "pedido", material: "Sintético", price: 550, heroImage: "https://i.ibb.co/ds8gnc6r/tenis-bordado-page-0033.jpg", sizes: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], isPreorder: true },
+            { id: 211, name: "Bordados Pedido 34", category: "pedido", material: "Sintético", price: 550, heroImage: "https://i.ibb.co/dwxZCMwR/tenis-bordado-page-0034.jpg", sizes: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], isPreorder: true },
+            { id: 212, name: "Bordados Pedido 35", category: "pedido", material: "Sintético", price: 550, heroImage: "https://i.ibb.co/rGJcjCjJ/tenis-bordado-page-0035.jpg", sizes: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], isPreorder: true },
+            { id: 213, name: "Bordados Pedido 36", category: "pedido", material: "Sintético", price: 550, heroImage: "https://i.ibb.co/jPnLdSQm/tenis-bordado-page-0036.jpg", sizes: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], isPreorder: true },
+            { id: 214, name: "Bordados Pedido 37", category: "pedido", material: "Sintético", price: 550, heroImage: "https://i.ibb.co/8g9Nc47D/tenis-bordado-page-0037.jpg", sizes: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], isPreorder: true },
+            { id: 215, name: "Bordados Pedido 38", category: "pedido", material: "Sintético", price: 550, heroImage: "https://i.ibb.co/qLSFTdyH/tenis-bordado-page-0038.jpg", sizes: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], isPreorder: true },
+            { id: 216, name: "Bordados Pedido 39", category: "pedido", material: "Sintético", price: 550, heroImage: "https://i.ibb.co/xt3G6fhB/tenis-bordado-page-0039.jpg", sizes: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], isPreorder: true },
+            { id: 217, name: "Bordados Pedido 40", category: "pedido", material: "Sintético", price: 550, heroImage: "https://i.ibb.co/9QGtxmw/tenis-bordado-page-0040.jpg", sizes: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], isPreorder: true },
+            { id: 218, name: "Bordados Pedido 41", category: "pedido", material: "Sintético", price: 550, heroImage: "https://i.ibb.co/cKCpcZDQ/tenis-bordado-page-0041.jpg", sizes: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], isPreorder: true },
+            { id: 219, name: "Bordados Pedido 42", category: "pedido", material: "Sintético", price: 550, heroImage: "https://i.ibb.co/sTmLTBh/tenis-bordado-page-0042.jpg", sizes: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], isPreorder: true },
+            { id: 220, name: "Bordados Pedido 43", category: "pedido", material: "Sintético", price: 550, heroImage: "https://i.ibb.co/WN19rBks/tenis-bordado-page-0043.jpg", sizes: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], isPreorder: true },
+            { id: 221, name: "Bordados Pedido 44", category: "pedido", material: "Sintético", price: 550, heroImage: "https://i.ibb.co/kgyfTNYz/tenis-bordado-page-0044.jpg", sizes: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], isPreorder: true },
+            { id: 222, name: "Bordados Pedido 45", category: "pedido", material: "Sintético", price: 550, heroImage: "https://i.ibb.co/xq0LTpkG/tenis-bordado-page-0045.jpg", sizes: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], isPreorder: true },
+            { id: 223, name: "Bordados Pedido 46", category: "pedido", material: "Sintético", price: 550, heroImage: "https://i.ibb.co/S77NJDT7/tenis-bordado-page-0046.jpg", sizes: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], isPreorder: true },
+            { id: 224, name: "Bordados Pedido 47", category: "pedido", material: "Sintético", price: 550, heroImage: "https://i.ibb.co/TDMsVvdm/tenis-bordado-page-0047.jpg", sizes: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], isPreorder: true },
+            { id: 225, name: "Bordados Pedido 48", category: "pedido", material: "Sintético", price: 550, heroImage: "https://i.ibb.co/4nszjBW2/tenis-bordado-page-0048.jpg", sizes: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], isPreorder: true },
+            { id: 226, name: "Bordados Pedido 49", category: "pedido", material: "Sintético", price: 550, heroImage: "https://i.ibb.co/1GWJ996s/tenis-bordado-page-0049.jpg", sizes: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], isPreorder: true },
+            { id: 227, name: "Bordados Pedido 50", category: "pedido", material: "Sintético", price: 550, heroImage: "https://i.ibb.co/NdYnNyT2/tenis-bordado-page-0050.jpg", sizes: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], isPreorder: true },
+            { id: 228, name: "Bordados Pedido 51", category: "pedido", material: "Sintético", price: 550, heroImage: "https://i.ibb.co/chSW1SxH/tenis-bordado-page-0051.jpg", sizes: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], isPreorder: true },
+            { id: 229, name: "Bordados Pedido 52", category: "pedido", material: "Sintético", price: 550, heroImage: "https://i.ibb.co/3ydqBJWP/tenis-bordado-page-0052.jpg", sizes: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], isPreorder: true },
+            { id: 230, name: "Bordados Pedido 53", category: "pedido", material: "Sintético", price: 550, heroImage: "https://i.ibb.co/mCP1mpgK/tenis-bordado-page-0053.jpg", sizes: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], isPreorder: true },
+            { id: 231, name: "Bordados Pedido 54", category: "pedido", material: "Sintético", price: 550, heroImage: "https://i.ibb.co/0ytDsj3H/tenis-bordado-page-0054.jpg", sizes: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], isPreorder: true },
+            { id: 232, name: "Bordados Pedido 55", category: "pedido", material: "Sintético", price: 550, heroImage: "https://i.ibb.co/k6Gwmrmm/tenis-bordado-page-0055.jpg", sizes: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], isPreorder: true },
+            { id: 233, name: "Bordados Pedido 56", category: "pedido", material: "Sintético", price: 550, heroImage: "https://i.ibb.co/LDx8QgR3/tenis-bordado-page-0056.jpg", sizes: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], isPreorder: true },
+            { id: 234, name: "Bordados Pedido 57", category: "pedido", material: "Sintético", price: 550, heroImage: "https://i.ibb.co/7d1WDhJD/tenis-bordado-page-0057.jpg", sizes: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], isPreorder: true },
+            { id: 235, name: "Bordados Pedido 58", category: "pedido", material: "Sintético", price: 550, heroImage: "https://i.ibb.co/6J10ppQk/tenis-bordado-page-0058.jpg", sizes: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], isPreorder: true },
+            { id: 236, name: "Bordados Pedido 59", category: "pedido", material: "Sintético", price: 550, heroImage: "https://i.ibb.co/k2RWrcvh/tenis-bordado-page-0059.jpg", sizes: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], isPreorder: true },
+            { id: 237, name: "Bordados Pedido 60", category: "pedido", material: "Sintético", price: 550, heroImage: "https://i.ibb.co/qMY16wKm/tenis-bordado-page-0060.jpg", sizes: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], isPreorder: true },
+            { id: 238, name: "Bordados Pedido 01", category: "pedido", material: "Sintético", price: 550, heroImage: "https://i.ibb.co/PvsDbLMC/tenis-bordado-page-0001.jpg", sizes: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], isPreorder: true },
+            { id: 239, name: "Bordados Pedido 02", category: "pedido", material: "Sintético", price: 550, heroImage: "https://i.ibb.co/1YdYcBm8/tenis-bordado-page-0002.jpg", sizes: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], isPreorder: true },
+            { id: 240, name: "Bordados Pedido 03", category: "pedido", material: "Sintético", price: 550, heroImage: "https://i.ibb.co/LDS67MfC/tenis-bordado-page-0003.jpg", sizes: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], isPreorder: true },
+            { id: 241, name: "Bordados Pedido 04", category: "pedido", material: "Sintético", price: 550, heroImage: "https://i.ibb.co/LXq96Hnx/tenis-bordado-page-0004.jpg", sizes: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], isPreorder: true },
+            { id: 242, name: "Bordados Pedido 05", category: "pedido", material: "Sintético", price: 550, heroImage: "https://i.ibb.co/vn47W38/tenis-bordado-page-0005.jpg", sizes: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], isPreorder: true },
+            { id: 243, name: "Bordados Pedido 06", category: "pedido", material: "Sintético", price: 550, heroImage: "https://i.ibb.co/7N8VnCjj/tenis-bordado-page-0006.jpg", sizes: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], isPreorder: true },
+            { id: 244, name: "Bordados Pedido 07", category: "pedido", material: "Sintético", price: 550, heroImage: "https://i.ibb.co/q36RcwKh/tenis-bordado-page-0007.jpg", sizes: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], isPreorder: true },
+            { id: 245, name: "Bordados Pedido 08", category: "pedido", material: "Sintético", price: 550, heroImage: "https://i.ibb.co/n8BhM33X/tenis-bordado-page-0008.jpg", sizes: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], isPreorder: true },
+            { id: 246, name: "Bordados Pedido 09", category: "pedido", material: "Sintético", price: 550, heroImage: "https://i.ibb.co/xSw9CZV8/tenis-bordado-page-0009.jpg", sizes: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], isPreorder: true },
+            { id: 247, name: "Bordados Pedido 10", category: "pedido", material: "Sintético", price: 550, heroImage: "https://i.ibb.co/j9nyP8H9/tenis-bordado-page-0010.jpg", sizes: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], isPreorder: true },
+            { id: 248, name: "Bordados Pedido 11", category: "pedido", material: "Sintético", price: 550, heroImage: "https://i.ibb.co/Q3TGLxf0/tenis-bordado-page-0011.jpg", sizes: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], isPreorder: true },
+            { id: 249, name: "Bordados Pedido 12", category: "pedido", material: "Sintético", price: 550, heroImage: "https://i.ibb.co/1fqRCCtD/tenis-bordado-page-0012.jpg", sizes: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], isPreorder: true },
+            { id: 250, name: "Bordados Pedido 13", category: "pedido", material: "Sintético", price: 550, heroImage: "https://i.ibb.co/PGKQNz0D/tenis-bordado-page-0013.jpg", sizes: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], isPreorder: true },
+            { id: 251, name: "Bordados Pedido 14", category: "pedido", material: "Sintético", price: 550, heroImage: "https://i.ibb.co/n88HPRRR/tenis-bordado-page-0014.jpg", sizes: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], isPreorder: true },
+            { id: 252, name: "Bordados Pedido 15", category: "pedido", material: "Sintético", price: 550, heroImage: "https://i.ibb.co/8D3g619X/tenis-bordado-page-0015.jpg", sizes: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], isPreorder: true },
+            { id: 253, name: "Bordados Pedido 16", category: "pedido", material: "Sintético", price: 550, heroImage: "https://i.ibb.co/TxbpHs1X/tenis-bordado-page-0016.jpg", sizes: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], isPreorder: true },
+            { id: 254, name: "Bordados Pedido 17", category: "pedido", material: "Sintético", price: 550, heroImage: "https://i.ibb.co/svrsYRbD/tenis-bordado-page-0017.jpg", sizes: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], isPreorder: true },
+            { id: 255, name: "Bordados Pedido 18", category: "pedido", material: "Sintético", price: 550, heroImage: "https://i.ibb.co/dJbWs8np/tenis-bordado-page-0018.jpg", sizes: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], isPreorder: true },
+            { id: 256, name: "Bordados Pedido 19", category: "pedido", material: "Sintético", price: 550, heroImage: "https://i.ibb.co/rRtKsG0v/tenis-bordado-page-0019.jpg", sizes: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], isPreorder: true },
+            { id: 257, name: "Bordados Pedido 20", category: "pedido", material: "Sintético", price: 550, heroImage: "https://i.ibb.co/PstbBtXG/tenis-bordado-page-0020.jpg", sizes: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], isPreorder: true },
+            { id: 258, name: "Bordados Pedido 21", category: "pedido", material: "Sintético", price: 550, heroImage: "https://i.ibb.co/d4dD50rx/tenis-bordado-page-0021.jpg", sizes: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], isPreorder: true },
+            { id: 259, name: "Bordados Pedido 22", category: "pedido", material: "Sintético", price: 550, heroImage: "https://i.ibb.co/xqXJNHjz/tenis-bordado-page-0022.jpg", sizes: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], isPreorder: true },
+            { id: 260, name: "Bordados Pedido 23", category: "pedido", material: "Sintético", price: 550, heroImage: "https://i.ibb.co/8gFdWgNX/tenis-bordado-page-0023.jpg", sizes: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], isPreorder: true }
         ];
 
         let cart = [];
@@ -111,11 +191,14 @@
             const sizeSelect = document.getElementById('sizeFilter');
             const allSizes = new Set();
             productsData.forEach(p => p.sizes.forEach(s => allSizes.add(s)));
-            const sortedSizes = Array.from(allSizes).sort((a, b) => a - b);
+            const sortedSizes = Array.from(allSizes).sort((a, b) => {
+                if(typeof a === 'number' && typeof b === 'number') return a - b;
+                return String(a).localeCompare(String(b));
+            });
             
-            sizeSelect.innerHTML = '<option value="all">Todas las tallas</option>';
+            sizeSelect.innerHTML = '<option value="all">Todas las tallas / medidas</option>';
             sortedSizes.forEach(size => {
-                sizeSelect.innerHTML += `<option value="${size}">Talla ${size}</option>`;
+                sizeSelect.innerHTML += `<option value="${size}">${typeof size === 'number' ? 'Talla ' + size : size}</option>`;
             });
         }
 
@@ -134,16 +217,27 @@
             const filtered = productsData.filter(p => {
                 const matchesSearch = p.name.toLowerCase().includes(search.toLowerCase());
                 const matchesCategory = (currentFilter === 'all' || p.category === currentFilter);
-                const matchesSize = (selectedSize === 'all' || p.sizes.includes(parseFloat(selectedSize)));
+                const matchesSize = (selectedSize === 'all' || p.sizes.includes(selectedSize) || p.sizes.includes(parseFloat(selectedSize)));
                 return matchesSearch && matchesCategory && matchesSize;
             });
 
             filtered.forEach(p => {
+                const badge = p.isPreorder ? `<span class="bg-red-100 text-red-600 text-[10px] font-extrabold px-2 py-0.5 rounded-full mb-1 inline-block">✨ SOBRE PEDIDO</span>` : '';
                 grid.innerHTML += `
-                    <div class="bg-white p-3 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition">
-                        <img src="${p.heroImage}" class="w-full h-40 object-cover rounded-xl mb-3">
-                        <h3 class="font-bold text-sm text-gray-800 truncate">${p.name}</h3>
-                        <p class="text-green-600 font-semibold mb-3">$${p.price}</p>
+                    <div class="bg-white p-3 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition flex flex-col justify-between">
+                        <div>
+                            <div class="relative group cursor-pointer" onclick="openZoomModal('${p.heroImage}', '${p.name.replace(/'/g, "\\'")}')">
+                                <img src="${p.heroImage}" class="w-full h-40 object-cover rounded-xl mb-3">
+                                <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition rounded-xl flex items-center justify-center">
+                                    <span class="bg-white/90 text-gray-900 text-xs font-bold px-2.5 py-1 rounded-full shadow opacity-0 group-hover:opacity-100 transition transform scale-90 group-hover:scale-100">
+                                        <i class="fas fa-search-plus mr-1"></i> Zoom
+                                    </span>
+                                </div>
+                            </div>
+                            ${badge}
+                            <h3 class="font-bold text-sm text-gray-800 truncate">${p.name}</h3>
+                            <p class="text-green-600 font-semibold mb-3">$${p.price}</p>
+                        </div>
                         <button onclick="openModal(${p.id})" class="w-full py-2 bg-black text-white rounded-lg text-sm font-bold">Ver Detalles</button>
                     </div>
                 `;
@@ -155,7 +249,7 @@
             const size = document.getElementById('sizeSelector').value;
             
             if(!size) {
-                alert("Por favor selecciona una talla");
+                alert("Por favor selecciona una talla o medida");
                 return;
             }
 
@@ -175,11 +269,13 @@
             
             cart.forEach((item, index) => {
                 subtotal += item.price;
+                const preorderTag = item.isPreorder ? '<span class="text-red-500 text-[10px] block font-bold">(Sobre Pedido)</span>' : '';
                 list.innerHTML += `
                     <div class="flex justify-between items-center py-2 border-b">
                         <div class="flex flex-col">
                             <span class="text-sm font-bold">${item.name}</span>
-                            <span class="text-xs text-gray-500">Talla: ${item.selectedSize}</span>
+                            <span class="text-xs text-gray-500">Talla/Medida: ${item.selectedSize}</span>
+                            ${preorderTag}
                         </div>
                         <span class="font-bold">$${item.price}</span>
                         <button onclick="removeFromCart(${index})" class="text-red-500"><i class="fas fa-trash text-xs"></i></button>
@@ -199,7 +295,10 @@
         function checkout() {
             if(cart.length === 0) return;
             let message = "Hola, me interesa hacer un pedido:%0A";
-            cart.forEach(item => message += `- ${item.name} (Talla: ${item.selectedSize}) - $${item.price}%0A`);
+            cart.forEach(item => {
+                const tipo = item.isPreorder ? " [SOBRE PEDIDO]" : "";
+                message += `- ${item.name}${tipo} (Talla/Medida: ${item.selectedSize}) - $${item.price}%0A`;
+            });
             
             const subtotal = cart.reduce((sum, item) => sum + item.price, 0);
             
@@ -217,14 +316,31 @@
             document.getElementById('modalPrice').innerText = "$" + product.price;
             document.getElementById('modalMaterial').innerText = "Material: " + product.material;
             
+            const badgeBox = document.getElementById('modalBadge');
+            if (product.isPreorder) {
+                badgeBox.innerHTML = '<span class="bg-red-100 text-red-600 text-xs font-extrabold px-3 py-1 rounded-full inline-block mb-2">✨ Artículo Sobre Pedido (Tiempo de elaboración especificado al cotizar)</span>';
+            } else {
+                badgeBox.innerHTML = '';
+            }
+            
             const select = document.getElementById('sizeSelector');
-            select.innerHTML = '<option value="">Selecciona una talla</option>';
-            product.sizes.sort((a,b) => a-b).forEach(s => {
-                select.innerHTML += `<option value="${s}">${s}</option>`;
+            select.innerHTML = '<option value="">Selecciona una opción</option>';
+            product.sizes.forEach(s => {
+                select.innerHTML += `<option value="${s}">${typeof s === 'number' ? 'Talla ' + s : s}</option>`;
             });
 
             document.getElementById('addBtn').onclick = () => addToCart(product.id);
             document.getElementById('modal').classList.add('active');
+        }
+
+        function openZoomModal(imgSrc, title) {
+            document.getElementById('zoomImg').src = imgSrc;
+            document.getElementById('zoomTitle').innerText = title;
+            document.getElementById('zoomModal').classList.add('active');
+        }
+
+        function closeZoomModal() {
+            document.getElementById('zoomModal').classList.remove('active');
         }
 
         function closeModal() { document.getElementById('modal').classList.remove('active'); }
@@ -236,16 +352,29 @@
         renderProducts();
     </script>
 
+    <!-- Modal de Zoom de Imagen Ultra Grande -->
+    <div id="zoomModal" class="zoom-modal fixed inset-0 bg-black bg-opacity-90 z-50 items-center justify-center p-2 md:p-6">
+        <div class="bg-white rounded-3xl p-4 max-w-4xl w-full relative flex flex-col items-center shadow-2xl max-h-[95vh]">
+            <button onclick="closeZoomModal()" class="absolute top-4 right-4 bg-gray-100 hover:bg-gray-200 w-11 h-11 rounded-full flex items-center justify-center transition z-10 shadow"><i class="fas fa-times text-xl text-gray-800"></i></button>
+            <h3 id="zoomTitle" class="font-bold text-lg text-gray-900 mb-3 text-center px-10"></h3>
+            <div class="w-full flex-1 flex items-center justify-center overflow-auto bg-gray-50 rounded-2xl p-2 min-h-[50vh]">
+                <img id="zoomImg" class="max-w-full max-h-[75vh] object-contain rounded-xl shadow-md">
+            </div>
+            <button onclick="closeZoomModal()" class="mt-4 w-full md:w-64 py-3 bg-black text-white rounded-xl font-bold text-sm shadow hover:bg-gray-800 transition">Cerrar Zoom</button>
+        </div>
+    </div>
+
     <div id="modal" class="modal fixed inset-0 bg-black bg-opacity-50 z-50 items-center justify-center p-4">
-        <div class="bg-white rounded-3xl p-6 max-w-sm w-full relative">
+        <div class="bg-white rounded-3xl p-6 max-w-sm w-full relative max-h-[90vh] overflow-y-auto">
             <button onclick="closeModal()" class="absolute top-4 right-4"><i class="fas fa-times text-2xl"></i></button>
-            <img id="modalImg" class="w-full h-64 object-contain rounded-2xl mb-4 bg-gray-50">
-            <h2 id="modalTitle" class="text-2xl font-bold mb-1"></h2>
-            <p id="modalMaterial" class="text-gray-600 text-sm mb-4"></p>
-            <p id="modalPrice" class="text-green-600 font-bold text-xl mb-1"></p>
+            <img id="modalImg" class="w-full h-56 object-contain rounded-2xl mb-3 bg-gray-50 cursor-pointer" onclick="openZoomModal(this.src, document.getElementById('modalTitle').innerText)">
+            <div id="modalBadge"></div>
+            <h2 id="modalTitle" class="text-xl font-bold mb-1"></h2>
+            <p id="modalMaterial" class="text-gray-600 text-xs mb-3"></p>
+            <p id="modalPrice" class="text-green-600 font-bold text-xl mb-3"></p>
              
-            <label class="block text-sm font-bold text-gray-700 mb-2">Selecciona tu talla:</label>
-            <select id="sizeSelector" class="w-full p-3 border rounded-xl mb-6"></select>
+            <label class="block text-sm font-bold text-gray-700 mb-2">Selecciona tu talla o medida:</label>
+            <select id="sizeSelector" class="w-full p-3 border rounded-xl mb-6 text-sm"></select>
 
             <button id="addBtn" class="w-full py-4 bg-black text-white rounded-xl font-bold hover:bg-gray-800 transition">Agregar al Carrito</button>
         </div>
